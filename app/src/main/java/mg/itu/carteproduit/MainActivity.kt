@@ -68,8 +68,9 @@ fun ProduitCard(produit: Produit) {
 
     // TODO B (à faire APRÈS le TODO A) :
     // 1. Déclarez ici un état booléen :
-    //      var selectionnee by remember { mutableStateOf(false) }
-    // 2. Ajoutez au Modifier de la Card :  .clickable { selectionnee = !selectionnee }
+          var selectionnee by remember { mutableStateOf(false) }
+    // 2. Ajoutez au Modifier de la Card :
+//     .clickable { selectionnee = !selectionnee }
     // 3. Changez la couleur de la carte selon l'état, en remplaçant
     //    les colors de la Card par :
     //      colors = CardDefaults.cardColors(
@@ -80,11 +81,13 @@ fun ProduitCard(produit: Produit) {
 
     Card(
         modifier = Modifier
+            .clickable { selectionnee = !selectionnee }
             .fillMaxWidth()
-            .padding(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
+            .padding(16.dp), colors = CardDefaults.cardColors(
+                      containerColor = if (selectionnee)
+                          MaterialTheme.colorScheme.primaryContainer
+                      else MaterialTheme.colorScheme.surfaceVariant
+                  )
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(produit.nom, style = MaterialTheme.typography.titleLarge)
@@ -101,12 +104,13 @@ fun ProduitCard(produit: Produit) {
 
             // TODO A :
             // 1. Déclarez EN HAUT de la fonction (au-dessus de la Card) :
-            //      var quantite by remember { mutableStateOf(0) }
+//            var quantite by remember { mutableStateOf(0) }
+            var quantite by remember { mutableStateOf(0) }
             // 2. Remplacez les deux lignes ci-dessous par :
             //      Text("Quantité : $quantite kg")
             //      Button(onClick = { quantite++ }) { Text("Ajouter 1 kg") }
-            Text("Quantité : (TODO A)")
-            Button(onClick = { /* TODO A */ }) { Text("Ajouter 1 kg") }
+            Text("Quantité : $quantite kg")
+            Button(onClick = { quantite++ }) { Text("Ajouter 1 kg") }
         }
     }
 }
